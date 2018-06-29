@@ -7,12 +7,12 @@ end_of_line = lf
 insert_final_newline = true
 indent_style = space
 
-# Matches multiple files with brace expansion notation
-# Set default charset
 [*.ts]
 charset = utf-8
 indent_size = 4
 
-# 4 space indentation
 [*.json]
+indent_size = 2
+
+[*.yml]
 indent_size = 2

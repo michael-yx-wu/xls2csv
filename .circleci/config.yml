@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.5.0-browsers
-    working_directory: ~/repo
+    working_directory: ~/xls2csv
 
     steps:
       - checkout
@@ -15,12 +15,74 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: yarn install
+      - run:
+          name: Installing dependencies
+          command: yarn install
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # build dist
-      - run: yarn dist
+      - run:
+          name: Building dist
+          command: yarn dist
+
+  publish:
+    docker:
+      - image: circleci/node:10.5.0-browsers
+    working_directory: ~/xls2csv
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: Installing dependencies
+          command: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          name: Building dist
+          command: yarn dist
+
+      - deploy:
+          name: Publish to NPM if tagged
+          working_directory: ~/xls2csv/dist
+          command: |
+            set -euo pipefail
+            TAG=${CIRCLE_TAG:-}
+            if [[ ${TAG} =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              yarn version --new-version "$TAG" --no-git-tag-version
+              echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
+              npm publish
+            else
+              echo "Not publishing: build was not triggered by a proper release tag"
+            fi
+
+workflows:
+  version: 2
+  build-maybe-publish:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - publish:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+$/
+            branches:
+              ignore: /.*/

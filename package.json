@@ -1,7 +1,6 @@
 {
   "license": "MIT",
   "name": "xls2csv",
-  "version": "0.1.0",
   "bin": "./bin/xls2csv",
   "scripts": {
     "clean": "shx rm -rf ./build ./dist",
