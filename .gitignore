@@ -1,0 +1,6 @@
+.node-version
+*.un~
+
+node_modules
+build/
+dist/

@@ -1,0 +1,22 @@
+{
+  "license": "MIT",
+  "name": "xls2csv",
+  "version": "0.1.0",
+  "bin": "./bin/xls2csv",
+  "scripts": {
+    "clean": "shx rm -rf ./build ./dist",
+    "build": "tsc",
+    "dist": "npm run clean && npm run dist:cp-supporting-files && npm run build && shx cp -R ./build/* ./dist/bin",
+    "dist:cp-supporting-files": "shx mkdir -p ./dist/bin && shx cp -R ./bin/* ./dist/bin && shx cp package.json ./dist",
+    "lint": "tslint -c tslint.json src/**/*.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^10.5.0",
+    "shx": "^0.3.1",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "xlsx": "^0.13.1"
+  }
+}
