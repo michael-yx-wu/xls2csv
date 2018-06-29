@@ -1,4 +1,4 @@
-# xls2csv
+# xls2csv [![CircleCI](https://circleci.com/gh/michael-yx-wu/xls2csv/tree/master.svg?style=svg)](https://circleci.com/gh/michael-yx-wu/xls2csv/tree/master)
 
 A simple node script to convert Excel files to CSV while ignoring empty cells.
 
