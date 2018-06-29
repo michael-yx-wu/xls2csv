@@ -1,4 +1,5 @@
 .node-version
+.npmrc
 *.un~
 
 node_modules
