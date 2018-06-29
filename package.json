@@ -6,7 +6,7 @@
     "clean": "shx rm -rf ./build ./dist",
     "build": "tsc",
     "dist": "npm run clean && npm run dist:cp-supporting-files && npm run build && shx cp -R ./build/* ./dist/bin",
-    "dist:cp-supporting-files": "shx mkdir -p ./dist/bin && shx cp -R ./bin/* ./dist/bin && shx cp package.json ./dist",
+    "dist:cp-supporting-files": "shx mkdir -p ./dist/bin && shx cp -R ./bin/* ./dist/bin && shx cp package.json README.md ./dist",
     "lint": "tslint -c tslint.json src/**/*.ts"
   },
   "devDependencies": {
