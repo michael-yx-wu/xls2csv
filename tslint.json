@@ -5,7 +5,13 @@
     ],
     "jsRules": {},
     "rules": {
-      "no-console": false
+      "no-console": false,
+      "variable-name": {
+        "options": [
+          "check-format",
+          "allow-leading-underscore"
+        ]
+      }
     },
     "rulesDirectory": []
 }
