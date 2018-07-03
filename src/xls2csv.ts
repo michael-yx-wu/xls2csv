@@ -48,6 +48,7 @@ export function toCsv(filePath: string, options: IOptions) {
         const sheet = workbook.Sheets[sheetName];
         promises.push(streamToCsv(sheet, outFilePath, options));
     }
+    return promises;
 }
 
 function streamToCsv(sheet: Sheet, outFilePath: string, options: IOptions) {
